@@ -173,25 +173,7 @@
       }
     }
 
-    [frequency!=0][voltage<12000],
-    [frequency!=0][frequency!=25][voltage=12000],
-    [frequency!=0][voltage>12000][voltage<12500],
-    [frequency!=0][frequency!=60][voltage=12500],
-    [frequency!=0][voltage>12500][voltage<15000] {
-       line-color: @color_lt15kv_ac;
-    }
-
-    [frequency!=0][frequency!=16.67][frequency!=16.7][voltage=15000],
-    [frequency!=0][voltage>15000][voltage<20000],
-    [frequency!=0][frequency!=50][frequency!=60][voltage=20000],
-    [frequency!=0][voltage>20000][voltage<25000] {
-       line-color: @color_gte15kv_lt25kv_ac;
-    }
-
-    [frequency!=0][frequency!=50][frequency!=60][voltage=25000],
-    [frequency!=0][voltage>25000] {
-       line-color: @color_gte25kv_ac;
-    }
+    /* DC */
 
     [frequency=0]["voltage"<750] {
        line-color: #FF79B8;
@@ -228,6 +210,28 @@
     [frequency=0][voltage>3000] {
        line-color: #1969FF;
     }
+
+    /*
+     * If matching declarations have equal specificity (i.e. number of selectors),
+     * the one last in position gets applied.
+     */
+
+    /* generic AC */
+
+    [frequency>0][voltage<15000] {
+       line-color: @color_lt15kv_ac;
+    }
+
+    /* 15000 <= voltage < 25000; higher voltages get overridden below */
+    [frequency>0][voltage>=15000] {
+       line-color: @color_gte15kv_lt25kv_ac;
+    }
+
+    [frequency>0][voltage>=25000] {
+       line-color: @color_gte25kv_ac;
+    }
+
+    /* prominent AC frequency-voltage combinations */
 
     [frequency=25][voltage=12000] {
        line-color: @color_12kv_25hz;
