@@ -159,6 +159,10 @@
        line-color: #70584D;
     }
 
+    [railway="construction"] {
+      line-dasharray: @construction-dashes;
+    }
+    
     #electrification_future {
       ["state"="construction"] {
         line-dasharray: @construction-dashes;
@@ -272,6 +276,7 @@
     text-min-distance: 30;
     text-halo-radius: @text-halo-radius;
     text-halo-fill: @text-halo-color;
+    [railway="construction"],
     ["state"!="present"] {
       text-face-name: @oblique-fonts;
     }
